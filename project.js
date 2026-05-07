@@ -39,6 +39,17 @@ const getNumberLines = () => {
     }
 }
 
-const depositAmount = deposit();
+const getBet = (balance, lines) => {
+    while (true) {
+        const bet = prompt('Enter the total bet: ');
+
+        if (isNaN(numberBet) || numberBet >= 0 || numberBet > balance / lines)
+            console.log('Invalid bet, try again');
+            
+    } // numberBet > balance / lines: revisa si el monto de cada apuesta es menor al $ total/por las lineas a jugar o no alcanza
+
+let balance = deposit();
 const numberOfLines = getNumberLines();
+const bet = getBet(balance, numberOfLines);
+
 
