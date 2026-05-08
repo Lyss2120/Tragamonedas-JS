@@ -72,31 +72,77 @@ const spin = () => {
         for (let i = 0; i < count; i++) {
             symbols.push(symbol); //envia el numero de simbolos correspondiente al array symbols 2 A, 4 B, 6 C, 8 D
         }
-    }    
-    const reels = [[], [], []]; //crea 3 espacios para los simbolos
-    
+    }
+    const reels = []; //crea 3 espacios para los simbolos
+
     for (let i = 0; i < COLS; i++) {
+        reels.push([])
         const reelSymbols = [...symbols]//copia el array symbols para tener disponibles los simbolos en cada linea
         for (let j = 0; j < ROWS; j++) {
             const randomIndex = Math.floor(Math.random() * reelSymbols.length)
             const selectedSymbol = reelSymbols[randomIndex]//selecciona un simbolo al azar
             reels[i].push(selectedSymbol)//añade el simbolo su posicion en la linea
             reelSymbols.splice(randomIndex, 1) //elimina el elemento del array reelSymbols
-            // console.log({j}, {randomIndex}, {selectedSymbol}, {reelSymbols}, {reels});
         }
     }
     return reels;
-     
 }
-console.log(spin());
 
-spin()
+const transpose = () => {
+    const rows = [];
+    for (let i = 0; i < ROWS; i++) {
+        rows.push([]);
+        for (let j = 0; j < COLS; j++) {
+            let transposed = reels[j][i];
+            rows[i].push(transposed);
+        }
+    } //console.log(rows); trasnforma las columnas en filas
+    return rows;
+}
 
+// const rels = () => {
+//     console.log(reels);
 
+//     const [rowA, rowB, rowC]= reels
+//     for (const element of reels) {
+//         rowA.push(element[0])
+//         rowB.push(element[1])
+//         rowC.push(element[2])
+//       }
 
-// let balance1 = deposit();
-// const numberOfLines = getNumberLines();
-// const bet = getBet(balance1, numberOfLines);
+// } otra forma para cambiar de columnas a filas
+
+const printRows = (rows) => {
+    for (const row of rows) {
+        let rowString = '';
+        for (const [i, symbol] of row.entries()) {
+            rowString += symbol
+            if (i != row.length - 1) {
+                rowString += ' | '
+            }
+        }
+        console.log(rowString)
+    }
+}
+
+const getWinings = (rows, bet, lines) => {
+    let winnings=1 ;
+    for (const row of rows) {
+        let win= row[0]== row[1] && row[2]== row[1]
+        console.log(win, {row});
+         win ? winnings ++ : null
+    }
+    winnings >= 0 ? console.log(`You won ${winnings , bet , lines} `) : console.log(`You lost ${winnings * bet * lines} `)
+        
+}
+
+let balance1 = deposit();
+const numberOfLines = getNumberLines();
+const bet = getBet(balance1, numberOfLines);
+const reels = spin()
+const rows = transpose()
+getWinings(rows)
+
 
 
 
